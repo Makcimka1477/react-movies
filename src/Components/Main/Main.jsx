@@ -4,15 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import Search from "./Search";
 import useFetch from "../../servicesHook/useFetch";
 import Movies from "./Movies";
-import PropTypes from "prop-types";
 import Preloader from "../Preloader";
 import ErrorBoundary from "../ErrorBoundary";
 import Filters from "./Filters/Filters";
 
 const Main = () => {
 	const { loader, error, getFilmData } = useFetch();
-
-	// const [films, setFilms] = useState([]);
 	const [films, setFilms] = useState(null);
 	const [type, setType] = useState("all");
 	const [search, setSearch] = useState("matrix");
@@ -21,16 +18,20 @@ const Main = () => {
 		setType((state) => e.target.value);
 	};
 
-	useEffect(() => {
+	const getFilms = () => {
 		getFilmData(search, type).then((data) => setFilms((state) => data));
+	};
+
+	useEffect(() => {
+		getFilms();
 	}, []);
 
 	useEffect(() => {
-		getFilmData(search, type).then((data) => setFilms((state) => data));
+		getFilms();
 	}, [type, search]);
 
-	const err = error && !loader && <h4>Ошибка</h4>;
-	const mov =
+	const errorComp = error && !loader && <h4>Some error</h4>;
+	const moviesComp =
 		!loader && !error && films ? (
 			<Movies
 				loader={loader}
@@ -38,7 +39,7 @@ const Main = () => {
 				search={search}
 			/>
 		) : null;
-	const load = loader && !error ? <Preloader /> : null;
+	const loaderComp = loader && !error ? <Preloader /> : null;
 
 	return (
 		<main className="main">
@@ -51,9 +52,7 @@ const Main = () => {
 				</ErrorBoundary>
 			</div>
 
-			<div
-				style={{ marginBottom: "30px" }}
-				className="container inputs">
+			<div className="container inputs">
 				<ErrorBoundary>
 					<Filters
 						type={type}
@@ -63,18 +62,12 @@ const Main = () => {
 			</div>
 
 			<div className="container main red-text text-lighten-3">
-				{load}
-				{err}
-				{mov}
+				{loaderComp}
+				{errorComp}
+				{moviesComp}
 			</div>
 		</main>
 	);
-};
-
-Main.propTypes = {
-	films: PropTypes.array,
-	type: PropTypes.string,
-	search: PropTypes.string,
 };
 
 export default Main;

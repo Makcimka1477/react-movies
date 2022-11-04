@@ -1,4 +1,8 @@
 main {
     padding: 20px 10px;
     min-height: calc(100vh - 134px) !important;
+
+    .container .inputs {
+        margin-bottom: 30px;
+    }
 }
