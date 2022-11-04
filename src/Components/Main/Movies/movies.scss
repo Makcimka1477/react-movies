@@ -1,0 +1,16 @@
+div.row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+.card-content {
+    user-select: none;
+}
+
+
+@media (max-width: 550px) {
+    div.row {
+        justify-content: center;
+    }
+}

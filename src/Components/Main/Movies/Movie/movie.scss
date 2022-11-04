@@ -1,0 +1,18 @@
+div div div span.card-title.title {
+    background-color: rgba(255, 0, 0, 0.3);
+    border-radius: 10px;
+    width: 90%;
+    text-align: center;
+    color: white !important;
+    font-weight: 500 !important;
+    min-height: 40px;
+    left: 50% !important;
+    transform: translateX(-50%);
+    padding: 0 !important;
+}
+
+div.col {
+    max-width: 220px !important;
+    float: none !important;
+    margin: 0 !important;
+}
